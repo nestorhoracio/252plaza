@@ -1,0 +1,29 @@
+---
+import Header from '../components/Header.astro';
+
+interface Props {
+  brand?: string;
+  title?: string;
+}
+const { brand = "plaza", title = "252 Plaza" } = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body data-brand={brand}>
+    <Header />
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/globals.css';
+</style>
+
+<style is:global>
+  @import '../styles/globals.css';
+</style>

@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  brand: string;
+  nombre: string;
+  descripcion: string;
+  href: string;
+  imagen: ImageMetadata;
+}
+
+const { brand, nombre, descripcion, href, imagen } = Astro.props;
+---
+
+<a href={href} class="card" data-brand={brand}>
+  <Image src={imagen} alt={nombre} width={400} height={220} class="card__imagen" />
+  <div class="card__body">
+    <h2 class="card__nombre">{nombre}</h2>
+    <p class="card__descripcion">{descripcion}</p>
+    <span class="card__cta">Ver menú →</span>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: block;
+    background-color: var(--brand-surface);
+    border: 2px solid var(--brand-primary);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .card__imagen {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;  /* solo arriba, combina con el card */
+}
+
+  .card__body {
+    padding: 1.5rem;
+  }
+
+  .card__nombre {
+    color: var(--brand-primary);
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card__descripcion {
+    color: var(--brand-text);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .card__cta {
+    color: var(--brand-accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+</style>

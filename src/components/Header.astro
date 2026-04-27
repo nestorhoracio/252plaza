@@ -1,0 +1,51 @@
+---
+// No necesita props — hereda data-brand del body
+---
+
+<header class="header">
+  <div class="header__logo">
+    <a href="/">252 Plaza</a>
+  </div>
+  <nav class="header__nav">
+    <a href="/pizzeria">Pizzería</a>
+    <a href="/cafeteria">Cafetería</a>
+    <a href="/heladeria">Heladería</a>
+    <a href="/restaurante">Restaurante</a>
+  </nav>
+</header>
+
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--brand-surface);
+    border-bottom: 2px solid var(--brand-primary);
+  }
+
+  .header__logo a {
+    color: var(--brand-primary);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 2px;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .header__nav a {
+    color: var(--brand-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+  }
+
+  .header__nav a:hover {
+    color: var(--brand-accent);
+  }
+</style>

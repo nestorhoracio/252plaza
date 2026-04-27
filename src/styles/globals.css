@@ -1,0 +1,65 @@
+/* ============================================
+   globals.css — Tokens de diseño 252 Plaza
+   ============================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--brand-bg);
+    color: var(--brand-text);
+    transition: background-color 0.3s ease;
+}
+
+/* --- 252 PLAZA (landing) --- */
+[data-brand="plaza"] {
+    --brand-bg: #0D0D0D;
+    --brand-surface: #1A1A1A;
+    --brand-primary: #FFFFFF;
+    --brand-accent: #D4A843;
+    --brand-text: #EEEEEE;
+}
+
+/* --- DEL TOMATE (pizzería) --- */
+[data-brand="pizzeria"] {
+    --brand-bg: #1A0808;
+    --brand-surface: #2A0F0F;
+    --brand-primary: #C0392B;
+    --brand-primary-lt: #E74C3C;
+    --brand-accent: #2471A3;
+    --brand-text: #F5E6E6;
+}
+
+/* --- MODO CAFÉ (cafetería) --- */
+[data-brand="cafeteria"] {
+    --brand-bg: #0D0D0D;
+    --brand-surface: #2A2018;
+    --brand-primary: #7B5533;
+    --brand-accent: #D4A96A;
+    --brand-text: #F0E6D6;
+}
+
+/* --- CHELATO (heladería) --- */
+[data-brand="heladeria"] {
+    --brand-bg: #120F1E;
+    --brand-surface: #1E1830;
+    --brand-primary: #7C3AED;
+    --brand-primary-lt: #C4B5FD;
+    --brand-accent: #C8A882;
+    --brand-text: #EDE9FE;
+}
+
+/* --- EL PASO (restaurante) --- */
+[data-brand="restaurante"] {
+    --brand-bg: #1E1508;
+    --brand-surface: #2D2520;
+    --brand-primary: #E8934A;
+    --brand-accent: #F5DEB3;
+    --brand-text: #FFF3E0;
+}
