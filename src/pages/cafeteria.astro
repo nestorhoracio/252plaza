@@ -1,7 +1,74 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import MenuCard from '../components/MenuCard.astro';
+import { MENU } from '../config/menu';
+
+import imgCappuccino from '../assets/images/cafe-cappuccino.webp';
+import imgLatte from '../assets/images/cafe-latte.webp';
+import imgTostado from '../assets/images/cafe-tostado.webp';
+
+const imagenes = [imgCappuccino, imgLatte, imgTostado];
 ---
 
 <Layout brand="cafeteria" title="Modo Café · Cafetería">
-  <h1>Modo Café</h1>
+
+  <section class="subhero">
+    <h1 class="subhero__titulo">Modo Café</h1>
+    <p class="subhero__subtitulo">Cafetería de especialidad</p>
+  </section>
+
+  <section class="menu">
+    <h2 class="menu__titulo">Nuestro Menú</h2>
+    <div class="menu__grid">
+      {MENU.cafeteria.map((item, i) => (
+        <MenuCard
+          nombre={item.nombre}
+          descripcion={item.descripcion}
+          precio={item.precio}
+          imagen={imagenes[i]}
+        />
+      ))}
+    </div>
+  </section>
+
 </Layout>
+
+<style>
+  .subhero {
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+  }
+
+  .subhero__titulo {
+    color: var(--brand-primary);
+    font-size: 3rem;
+    letter-spacing: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  .subhero__subtitulo {
+    color: var(--brand-accent);
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+
+  .menu {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .menu__titulo {
+    color: var(--brand-text);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  .menu__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

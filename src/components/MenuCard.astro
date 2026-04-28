@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  nombre: string;
+  descripcion: string;
+  precio: string;
+  imagen: ImageMetadata;
+}
+
+const { nombre, descripcion, precio, imagen } = Astro.props;
+---
+
+<div class="menu-card">
+  <Image src={imagen} alt={nombre} width={400} height={250} class="menu-card__imagen" />
+  <div class="menu-card__body">
+    <h3 class="menu-card__nombre">{nombre}</h3>
+    <p class="menu-card__descripcion">{descripcion}</p>
+    <span class="menu-card__precio">{precio}</span>
+  </div>
+</div>
+
+<style>
+  .menu-card {
+    background-color: var(--brand-surface);
+    border: 1px solid var(--brand-primary);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .menu-card__imagen {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .menu-card__body {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .menu-card__nombre {
+    color: var(--brand-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .menu-card__descripcion {
+    color: var(--brand-text);
+    font-size: 0.85rem;
+    opacity: 0.8;
+    line-height: 1.4;
+  }
+
+  .menu-card__precio {
+    color: var(--brand-accent);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+</style>
