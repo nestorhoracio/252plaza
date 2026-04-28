@@ -29,6 +29,11 @@
   [data-theme="dark"] .icon-moon { display: none; }
   [data-theme="light"] .icon-sun  { display: none; }
   [data-theme="light"] .icon-moon { display: inline; }
+  @media (max-width: 768px) {
+  .theme-toggle {
+    display: flex;
+  }
+}
 </style>
 <script>
   const KEY = '252plaza-theme';

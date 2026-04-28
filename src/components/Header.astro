@@ -1,18 +1,40 @@
 ---
-// No necesita props — hereda data-brand del body
 ---
 
 <header class="header">
   <div class="header__logo">
     <a href="/">252 Plaza</a>
   </div>
+
+  <!-- Nav desktop -->
   <nav class="header__nav">
     <a href="/pizzeria">Pizzería</a>
     <a href="/cafeteria">Cafetería</a>
     <a href="/heladeria">Heladería</a>
     <a href="/restaurante">Restaurante</a>
   </nav>
+
+  <!-- Botón hamburger -->
+  <button class="header__hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </header>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <button class="sidebar__cerrar" id="cerrarSidebar" aria-label="Cerrar menú">✕</button>
+  <nav class="sidebar__nav">
+    <a href="/pizzeria">Pizzería</a>
+    <a href="/cafeteria">Cafetería</a>
+    <a href="/heladeria">Heladería</a>
+    <a href="/restaurante">Restaurante</a>
+  </nav>
+</div>
+
+<!-- Overlay oscuro detrás del sidebar -->
+<div class="sidebar__backdrop" id="backdrop"></div>
 
 <style>
   .header {
@@ -22,6 +44,9 @@
     padding: 1rem 2rem;
     background-color: var(--brand-surface);
     border-bottom: 2px solid var(--brand-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
   .header__logo a {
@@ -48,4 +73,119 @@
   .header__nav a:hover {
     color: var(--brand-accent);
   }
+
+  /* Hamburger */
+  .header__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .header__hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--brand-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100vh;
+    background-color: var(--brand-surface);
+    border-left: 2px solid var(--brand-primary);
+    z-index: 200;
+    padding: 2rem;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .sidebar.open {
+    right: 0;
+  }
+
+  .sidebar__cerrar {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--brand-primary);
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sidebar__nav a {
+    color: var(--brand-text);
+    text-decoration: none;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+  }
+
+  .sidebar__nav a:hover {
+    color: var(--brand-accent);
+  }
+
+  /* Backdrop */
+  .sidebar__backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+  }
+
+  .sidebar__backdrop.open {
+    display: block;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .header__nav {
+      display: none;
+    }
+
+    .header__hamburger {
+      display: flex;
+    }
+  }
 </style>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('backdrop');
+  const cerrar = document.getElementById('cerrarSidebar');
+
+  function abrirSidebar(): void {
+    sidebar?.classList.add('open');
+    backdrop?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarSidebar(): void {
+    sidebar?.classList.remove('open');
+    backdrop?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburger?.addEventListener('click', abrirSidebar);
+  cerrar?.addEventListener('click', cerrarSidebar);
+  backdrop?.addEventListener('click', cerrarSidebar);
+</script>
