@@ -1,0 +1,56 @@
+---
+---
+
+<button id="themeToggle" aria-label="Cambiar tema" style="
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--brand-primary);
+  background-color: var(--brand-surface);
+  color: var(--brand-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+">
+  <span class="icon-sun">☀️</span>
+  <span class="icon-moon">🌙</span>
+</button>
+<style is:global>
+  .icon-sun  { display: none; }
+  .icon-moon { display: none; }
+
+  [data-theme="dark"] .icon-sun  { display: inline; }
+  [data-theme="dark"] .icon-moon { display: none; }
+  [data-theme="light"] .icon-sun  { display: none; }
+  [data-theme="light"] .icon-moon { display: inline; }
+</style>
+<script>
+  const KEY = '252plaza-theme';
+
+  function getTheme(): string {
+    const saved = localStorage.getItem(KEY);
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme: string): void {
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem(KEY, theme);
+  }
+
+  applyTheme(getTheme());
+
+  const btn = document.getElementById('themeToggle');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme') ?? 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+</script>

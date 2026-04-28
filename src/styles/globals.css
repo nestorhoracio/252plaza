@@ -63,3 +63,49 @@ body {
     --brand-accent: #F5DEB3;
     --brand-text: #FFF3E0;
 }
+
+/* ============================================
+   TEMA LIGHT por marca
+   ============================================ */
+
+[data-brand="plaza"][data-theme="light"] {
+    --brand-bg: #F5F5F5;
+    --brand-surface: #FFFFFF;
+    --brand-primary: #111111;
+    --brand-accent: #B8860B;
+    --brand-text: #222222;
+}
+
+[data-brand="pizzeria"][data-theme="light"] {
+    --brand-bg: #FFF0F0;
+    --brand-surface: #FFE0E0;
+    --brand-primary: #A93226;
+    --brand-primary-lt: #C0392B;
+    --brand-accent: #1A5276;
+    --brand-text: #2A0808;
+}
+
+[data-brand="cafeteria"][data-theme="light"] {
+    --brand-bg: #FDF6EC;
+    --brand-surface: #F5E6D0;
+    --brand-primary: #6B4423;
+    --brand-accent: #A0722A;
+    --brand-text: #2C1A0A;
+}
+
+[data-brand="heladeria"][data-theme="light"] {
+    --brand-bg: #F3F0FF;
+    --brand-surface: #E9E3FF;
+    --brand-primary: #6D28D9;
+    --brand-primary-lt: #7C3AED;
+    --brand-accent: #8B6347;
+    --brand-text: #1E1040;
+}
+
+[data-brand="restaurante"][data-theme="light"] {
+    --brand-bg: #FFF8F0;
+    --brand-surface: #FFE8CC;
+    --brand-primary: #C4713A;
+    --brand-accent: #8B6914;
+    --brand-text: #2C1500;
+}
