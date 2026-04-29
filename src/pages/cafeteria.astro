@@ -2,10 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import MenuCard from '../components/MenuCard.astro';
 import { MENU } from '../config/menu';
+import { Image } from 'astro:assets';
 
 import imgCappuccino from '../assets/images/cafe-cappuccino.webp';
 import imgLatte from '../assets/images/cafe-latte.webp';
 import imgTostado from '../assets/images/cafe-tostado.webp';
+import heroCafeteria from '../assets/images/hero-cafeteria.webp';
 
 const imagenes = [imgCappuccino, imgLatte, imgTostado];
 ---
@@ -13,8 +15,12 @@ const imagenes = [imgCappuccino, imgLatte, imgTostado];
 <Layout brand="cafeteria" title="Modo Café · Cafetería">
 
   <section class="subhero">
-    <h1 class="subhero__titulo">Modo Café</h1>
-    <p class="subhero__subtitulo">Cafetería de especialidad</p>
+    <Image src={heroCafeteria} alt="Modo Café" width={1920} height={600} class="subhero__imagen" />
+    <div class="subhero__overlay"></div>
+    <div class="subhero__contenido">
+      <h1 class="subhero__titulo">Modo Café</h1>
+      <p class="subhero__subtitulo">Cafetería de especialidad</p>
+    </div>
   </section>
 
   <section class="menu">
@@ -35,21 +41,50 @@ const imagenes = [imgCappuccino, imgLatte, imgTostado];
 
 <style>
   .subhero {
+    position: relative;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .subhero__imagen {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .subhero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+  }
+
+  .subhero__contenido {
+    position: relative;
+    z-index: 2;
     text-align: center;
-    padding: 4rem 2rem 2rem;
   }
 
   .subhero__titulo {
-    color: var(--brand-primary);
+    color: #FFFFFF;
     font-size: 3rem;
     letter-spacing: 4px;
     margin-bottom: 0.5rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
   }
 
   .subhero__subtitulo {
-    color: var(--brand-accent);
+    color: #FFFFFF;
     font-size: 1rem;
     letter-spacing: 2px;
+    opacity: 0.9;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
   }
 
   .menu {
