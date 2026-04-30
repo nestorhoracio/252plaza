@@ -1,0 +1,232 @@
+---
+---
+
+<div class="chatbot" id="chatbot">
+  <button class="chatbot__toggle" id="chatToggle" aria-label="Abrir asistente">
+    🍽️
+  </button>
+
+  <div class="chatbot__ventana" id="chatVentana">
+    <div class="chatbot__header">
+      <span>🤖 Asistente 252 Plaza</span>
+      <button class="chatbot__cerrar" id="chatCerrar">✕</button>
+    </div>
+
+    <div class="chatbot__mensajes" id="chatMensajes">
+      <div class="mensaje mensaje--bot">
+        ¡Hola! Soy el asistente de 252 Plaza. ¿Qué te provoca hoy? Puedo recomendarte algo del menú y ayudarte a hacer tu pedido 😊
+      </div>
+    </div>
+
+    <div class="chatbot__input">
+      <input
+        type="text"
+        id="chatInput"
+        placeholder="Escribí tu consulta..."
+        autocomplete="off"
+      />
+      <button id="chatEnviar">➤</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .chatbot {
+    position: fixed;
+    bottom: 5rem;
+    left: 2rem;
+    z-index: 998;
+  }
+
+  .chatbot__toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--brand-primary);
+    background-color: var(--brand-surface);
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+  }
+
+  .chatbot__toggle:hover {
+    transform: scale(1.1);
+  }
+
+  .chatbot__ventana {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    bottom: 4rem;
+    left: 0;
+    width: 320px;
+    height: 420px;
+    background-color: var(--brand-surface);
+    border: 2px solid var(--brand-primary);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .chatbot__ventana.abierto {
+    display: flex;
+  }
+
+  .chatbot__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--brand-primary);
+    color: var(--brand-bg);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .chatbot__cerrar {
+    background: none;
+    border: none;
+    color: var(--brand-bg);
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .chatbot__mensajes {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mensaje {
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-width: 85%;
+  }
+
+  .mensaje--bot {
+    background-color: var(--brand-bg);
+    color: var(--brand-text);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+
+  .mensaje--usuario {
+    background-color: var(--brand-primary);
+    color: var(--brand-bg);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+
+  .mensaje--cargando {
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .chatbot__input {
+    display: flex;
+    border-top: 1px solid var(--brand-primary);
+  }
+
+  .chatbot__input input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    background-color: var(--brand-bg);
+    color: var(--brand-text);
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .chatbot__input button {
+    padding: 0.75rem 1rem;
+    background-color: var(--brand-primary);
+    color: var(--brand-bg);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .chatbot__input button:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .chatbot__ventana {
+      width: 280px;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('chatToggle');
+  const ventana = document.getElementById('chatVentana');
+  const cerrar = document.getElementById('chatCerrar');
+  const input = document.getElementById('chatInput') as HTMLInputElement;
+  const enviar = document.getElementById('chatEnviar');
+  const mensajes = document.getElementById('chatMensajes');
+
+  let historial: { role: string; content: string }[] = [];
+
+  toggle?.addEventListener('click', () => {
+    ventana?.classList.toggle('abierto');
+    if (ventana?.classList.contains('abierto')) {
+      input?.focus();
+    }
+  });
+
+  cerrar?.addEventListener('click', () => {
+    ventana?.classList.remove('abierto');
+  });
+
+  function agregarMensaje(texto: string, tipo: 'bot' | 'usuario' | 'cargando') {
+    const div = document.createElement('div');
+    div.className = `mensaje mensaje--${tipo}`;
+    div.textContent = texto;
+    mensajes?.appendChild(div);
+    mensajes!.scrollTop = mensajes!.scrollHeight;
+    return div;
+  }
+
+  async function enviarMensaje() {
+    const texto = input?.value.trim();
+    if (!texto) return;
+
+    input.value = '';
+    agregarMensaje(texto, 'usuario');
+    historial.push({ role: 'user', content: texto });
+
+    const cargando = agregarMensaje('Escribiendo...', 'cargando');
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: historial }),
+      });
+
+      const data = await res.json();
+      cargando.remove();
+
+      const respuesta = data.content || 'Lo siento, no pude procesar tu consulta.';
+      agregarMensaje(respuesta, 'bot');
+      historial.push({ role: 'assistant', content: respuesta });
+
+    } catch {
+      cargando.remove();
+      agregarMensaje('Error de conexión. Intentá de nuevo.', 'bot');
+    }
+  }
+
+  enviar?.addEventListener('click', enviarMensaje);
+
+  input?.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Enter') enviarMensaje();
+  });
+</script>

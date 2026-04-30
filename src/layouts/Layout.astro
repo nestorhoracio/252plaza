@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import ChatBot from '../components/ChatBot.astro';
 
 interface Props {
   brand?: string;
@@ -12,15 +13,19 @@ const { brand = "plaza", title = "252 Plaza" } = Astro.props;
 
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-  </head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+</head>
   <body data-brand={brand}>
     <Header />
     <slot />
     <Footer />
     <ThemeToggle />
+    <ChatBot />
   </body>
 </html>
 
