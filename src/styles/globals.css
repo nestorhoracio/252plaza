@@ -109,3 +109,29 @@ body {
     --brand-accent: #8B6914;
     --brand-text: #2C1500;
 }
+
+/* ============================================
+   ChatBot — Botón WhatsApp
+   ============================================ */
+.btn-whatsapp {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    background-color: #25D366 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    padding: 0.7rem 1rem !important;
+    border-radius: 8px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    transition: opacity 0.2s ease !important;
+    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.4) !important;
+    margin-top: 0.5rem !important;
+}
+
+.btn-whatsapp:hover {
+    opacity: 0.85 !important;
+    color: #ffffff !important;
+}
