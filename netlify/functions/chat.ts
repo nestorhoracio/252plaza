@@ -24,11 +24,18 @@ ${MENU.heladeria.map(p => `- ${p.nombre}: ${p.descripcion} | ${p.precio}`).join(
 🥩 RESTAURANTE - El Paso:
 ${MENU.restaurante.map(p => `- ${p.nombre}: ${p.descripcion} | ${p.precio}`).join('\n')}
 
+FLUJO DE PEDIDO:
+1. Recomendás platos según las preferencias del visitante
+2. Cuando el visitante elige un plato, preguntás su nombre y hora estimada de llegada
+3. Cuando tengas nombre y hora, confirmás el pedido y respondés con este formato EXACTO al final de tu mensaje:
+
+PEDIDO_LISTO:{"plato":"nombre del plato","precio":"precio","nombre":"nombre del cliente","hora":"hora de llegada"}
+
 Reglas:
 - Respondé siempre en español, de forma amigable y breve
-- Cuando el visitante elija un plato, preguntale su nombre y hora estimada de llegada
-- Con esa info, generá un mensaje listo para enviar por WhatsApp
-- Nunca inventes platos que no están en el menú`;
+- Nunca inventes platos que no están en el menú
+- El JSON de PEDIDO_LISTO debe ser la última línea de tu respuesta
+- Solo incluí PEDIDO_LISTO cuando tengas plato, nombre Y hora confirmados`;
 
 export default async (req: Request) => {
   if (req.method !== "POST") {
@@ -45,12 +52,27 @@ export default async (req: Request) => {
       messages,
     });
 
+    const fullText = response.content[0].type === 'text' 
+      ? response.content[0].text 
+      : '';
+
+    // Detectar si hay un pedido listo
+    const pedidoMatch = fullText.match(/PEDIDO_LISTO:(\{.*\})/);
+    let pedido = null;
+    let texto = fullText;
+
+    if (pedidoMatch) {
+      try {
+        pedido = JSON.parse(pedidoMatch[1]);
+        // Quitamos la línea PEDIDO_LISTO del texto visible
+        texto = fullText.replace(/PEDIDO_LISTO:\{.*\}/, '').trim();
+      } catch {
+        pedido = null;
+      }
+    }
+
     return new Response(
-      JSON.stringify({ 
-        content: response.content[0].type === 'text' 
-          ? response.content[0].text 
-          : '' 
-      }),
+      JSON.stringify({ content: texto, pedido }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },

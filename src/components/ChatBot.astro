@@ -162,9 +162,27 @@
       width: 280px;
     }
   }
+  .btn-whatsapp {
+    display: block;
+    background-color: #25D366;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-whatsapp:hover {
+    opacity: 0.85;
+  }
 </style>
 
 <script>
+  const WHATSAPP_NUMBER = "59899474094";
+
   const toggle = document.getElementById('chatToggle');
   const ventana = document.getElementById('chatVentana');
   const cerrar = document.getElementById('chatCerrar');
@@ -194,6 +212,25 @@
     return div;
   }
 
+  function agregarBotonWhatsApp(pedido: { plato: string; precio: string; nombre: string; hora: string }) {
+    const mensaje = `Hola! Quiero hacer un pedido en 252 Plaza 🍽️\n\n*Plato:* ${pedido.plato} (${pedido.precio})\n*Nombre:* ${pedido.nombre}\n*Hora de llegada:* ${pedido.hora}\n\nGracias!`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+    const div = document.createElement('div');
+    div.className = 'mensaje mensaje--bot';
+
+    const btn = document.createElement('a');
+    btn.href = url;
+    btn.target = '_blank';
+    btn.rel = 'noopener';
+    btn.className = 'btn-whatsapp';
+    btn.innerHTML = `<span>📲 Enviar pedido por WhatsApp</span>`;
+    
+    div.appendChild(btn);
+    mensajes?.appendChild(div);
+    mensajes!.scrollTop = mensajes!.scrollHeight;
+  }
+
   async function enviarMensaje() {
     const texto = input?.value.trim();
     if (!texto) return;
@@ -217,6 +254,11 @@
       const respuesta = data.content || 'Lo siento, no pude procesar tu consulta.';
       agregarMensaje(respuesta, 'bot');
       historial.push({ role: 'assistant', content: respuesta });
+
+      // Si hay pedido listo, mostrar botón WhatsApp
+      if (data.pedido) {
+        agregarBotonWhatsApp(data.pedido);
+      }
 
     } catch {
       cargando.remove();
