@@ -1,9 +1,13 @@
 ---
+import { Image } from 'astro:assets';
+import logoPlaza from '../assets/images/logo_252_plaza.jpg';
 ---
 
 <header class="header">
   <div class="header__logo">
-    <a href="/">252 Plaza</a>
+    <a href="/">
+      <Image src={logoPlaza} alt="252 Plaza" width={80} height={80} class="header__logo-img" />
+    </a>
   </div>
 
   <!-- Nav desktop -->
@@ -55,6 +59,12 @@
     font-weight: 700;
     text-decoration: none;
     letter-spacing: 2px;
+  }
+  .header__logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 10px;
   }
 
   .header__nav {

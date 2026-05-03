@@ -11,16 +11,23 @@
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Lora', Georgia, serif;
     background-color: var(--brand-bg);
     color: var(--brand-text);
     transition: background-color 0.3s ease;
 }
 
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-variant-numeric: lining-nums;
+}
+
 /* --- 252 PLAZA (landing) --- */
 [data-brand="plaza"] {
-    --brand-bg: #0D0D0D;
-    --brand-surface: #1A1A1A;
+    --brand-bg: #121210;
+    --brand-surface: #1C1C1B;
     --brand-primary: #FFFFFF;
     --brand-accent: #D4A843;
     --brand-text: #EEEEEE;
