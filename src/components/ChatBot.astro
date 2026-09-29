@@ -24,8 +24,9 @@
         id="chatInput"
         placeholder="Escribí tu consulta..."
         autocomplete="off"
+        maxlength="500"
       />
-      <button id="chatEnviar">➤</button>
+      <button id="chatEnviar" aria-label="Enviar mensaje">➤</button>
     </div>
   </div>
 </div>
@@ -157,6 +158,12 @@
     opacity: 0.8;
   }
 
+  .chatbot__input input:disabled,
+  .chatbot__input button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   @media (max-width: 768px) {
     .chatbot__ventana {
       width: 280px;
@@ -174,10 +181,24 @@
   const ventana = document.getElementById('chatVentana');
   const cerrar = document.getElementById('chatCerrar');
   const input = document.getElementById('chatInput') as HTMLInputElement;
-  const enviar = document.getElementById('chatEnviar');
+  const enviar = document.getElementById('chatEnviar') as HTMLButtonElement;
   const mensajes = document.getElementById('chatMensajes');
 
-  let historial: { role: string; content: string }[] = [];
+  const MAX_HISTORIAL = 10;
+  const MENSAJES_ERROR: Record<number, string> = {
+    400: 'No pude procesar ese mensaje. ¿Probás escribirlo de otra forma?',
+    429: 'Estás escribiendo muy rápido, esperá un momento y volvé a intentar.',
+    500: 'Tuvimos un problema de nuestro lado. Intentá de nuevo en un ratito.',
+  };
+
+  let historial: { role: 'user' | 'assistant'; content: string }[] = [];
+  let enviando = false;
+
+  function setEnviando(valor: boolean) {
+    enviando = valor;
+    input.disabled = valor;
+    enviar.disabled = valor;
+  }
 
   toggle?.addEventListener('click', () => {
     ventana?.classList.toggle('abierto');
@@ -224,12 +245,15 @@
   }
 
   async function enviarMensaje() {
-    const texto = input?.value.trim();
+    if (enviando) return;
+    const texto = input.value.trim();
     if (!texto) return;
 
+    setEnviando(true);
     input.value = '';
     agregarMensaje(texto, 'usuario');
     historial.push({ role: 'user', content: texto });
+    historial = historial.slice(-MAX_HISTORIAL);
 
     const cargando = agregarMensaje('Escribiendo...', 'cargando');
 
@@ -239,22 +263,31 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: historial }),
       });
-
-      const data = await res.json();
       cargando.remove();
 
+      if (!res.ok) {
+        // Sacamos el mensaje que falló para no reenviarlo en el próximo intento.
+        historial.pop();
+        agregarMensaje(MENSAJES_ERROR[res.status] ?? MENSAJES_ERROR[500], 'bot');
+        return;
+      }
+
+      const data = await res.json();
       const respuesta = data.content || 'Lo siento, no pude procesar tu consulta.';
       agregarMensaje(respuesta, 'bot');
       historial.push({ role: 'assistant', content: respuesta });
+      historial = historial.slice(-MAX_HISTORIAL);
 
-      // Si hay pedido listo, mostrar botón WhatsApp
       if (data.pedido) {
         agregarBotonWhatsApp(data.pedido);
       }
-
     } catch {
       cargando.remove();
+      historial.pop();
       agregarMensaje('Error de conexión. Intentá de nuevo.', 'bot');
+    } finally {
+      setEnviando(false);
+      input.focus();
     }
   }
 
