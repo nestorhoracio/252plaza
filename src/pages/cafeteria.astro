@@ -4,12 +4,7 @@ import MenuCard from '../components/MenuCard.astro';
 import { MENU } from '../config/menu';
 import { Image } from 'astro:assets';
 
-import imgCappuccino from '../assets/images/cafe-cappuccino.webp';
-import imgLatte from '../assets/images/cafe-latte.webp';
-import imgTostado from '../assets/images/cafe-tostado.webp';
 import heroCafeteria from '../assets/images/hero-cafeteria.webp';
-
-const imagenes = [imgCappuccino, imgLatte, imgTostado];
 ---
 
 <Layout brand="cafeteria" title="Modo Café · Cafetería">
@@ -26,12 +21,12 @@ const imagenes = [imgCappuccino, imgLatte, imgTostado];
   <section class="menu">
     <h2 class="menu__titulo">Nuestro Menú</h2>
     <div class="menu__grid">
-      {MENU.cafeteria.map((item, i) => (
+      {MENU.cafeteria.map((item) => (
         <MenuCard
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}
-          imagen={imagenes[i]}
+          imagen={item.imagen}
         />
       ))}
     </div>

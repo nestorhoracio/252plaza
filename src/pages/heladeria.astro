@@ -4,12 +4,7 @@ import MenuCard from '../components/MenuCard.astro';
 import { MENU } from '../config/menu';
 import { Image } from 'astro:assets';
 
-import imgDDL from '../assets/images/helado-ddl.webp';
-import imgBosque from '../assets/images/helado-bosque.webp';
-import imgChocolate from '../assets/images/helado-chocolate.webp';
 import heroHeladeria from '../assets/images/hero-heladeria.webp';
-
-const imagenes = [imgDDL, imgBosque, imgChocolate];
 ---
 
 <Layout brand="heladeria" title="Chelato · Heladería">
@@ -26,12 +21,12 @@ const imagenes = [imgDDL, imgBosque, imgChocolate];
   <section class="menu">
     <h2 class="menu__titulo">Nuestro Menú</h2>
     <div class="menu__grid">
-      {MENU.heladeria.map((item, i) => (
+      {MENU.heladeria.map((item) => (
         <MenuCard
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}
-          imagen={imagenes[i]}
+          imagen={item.imagen}
         />
       ))}
     </div>

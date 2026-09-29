@@ -4,12 +4,7 @@ import MenuCard from '../components/MenuCard.astro';
 import { MENU } from '../config/menu';
 import { Image } from 'astro:assets';
 
-import imgNapolitana from '../assets/images/pizza-napolitana.webp';
-import imgCalabresa from '../assets/images/pizza-calabresa.webp';
-import imgDelTomate from '../assets/images/pizza-deltomate.webp';
 import heroPizzeria from '../assets/images/hero-pizzeria.webp';
-
-const imagenes = [imgNapolitana, imgCalabresa, imgDelTomate];
 ---
 
 <Layout brand="pizzeria" title="Del Tomate · Pizzería">
@@ -26,12 +21,12 @@ const imagenes = [imgNapolitana, imgCalabresa, imgDelTomate];
   <section class="menu">
     <h2 class="menu__titulo">Nuestro Menú</h2>
     <div class="menu__grid">
-      {MENU.pizzeria.map((item, i) => (
+      {MENU.pizzeria.map((item) => (
         <MenuCard
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}
-          imagen={imagenes[i]}
+          imagen={item.imagen}
         />
       ))}
     </div>

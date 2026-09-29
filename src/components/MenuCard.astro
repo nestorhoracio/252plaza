@@ -5,14 +5,20 @@ interface Props {
   nombre: string;
   descripcion: string;
   precio: string;
-  imagen: ImageMetadata;
+  imagen: string;
 }
 
 const { nombre, descripcion, precio, imagen } = Astro.props;
+
+const imagenes = import.meta.glob<{ default: ImageMetadata }>('../assets/images/*.webp', { eager: true });
+const src = imagenes[`../assets/images/${imagen}`]?.default;
+if (!src) {
+  throw new Error(`MenuCard: no existe la imagen "${imagen}" en src/assets/images/`);
+}
 ---
 
 <div class="menu-card">
-  <Image src={imagen} alt={nombre} width={400} height={250} class="menu-card__imagen" />
+  <Image src={src} alt={nombre} width={400} height={250} class="menu-card__imagen" />
   <div class="menu-card__body">
     <h3 class="menu-card__nombre">{nombre}</h3>
     <p class="menu-card__descripcion">{descripcion}</p>

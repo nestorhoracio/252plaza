@@ -4,12 +4,7 @@ import MenuCard from '../components/MenuCard.astro';
 import { MENU } from '../config/menu';
 import { Image } from 'astro:assets';
 
-import imgParrilla from '../assets/images/paso-parrilla.webp';
-import imgMilanesa from '../assets/images/paso-milanesa.webp';
-import imgPasta from '../assets/images/paso-pasta.webp';
 import heroRestaurante from '../assets/images/hero-restaurante.webp';
-
-const imagenes = [imgParrilla, imgMilanesa, imgPasta];
 ---
 
 <Layout brand="restaurante" title="El Paso · Restaurante">
@@ -26,12 +21,12 @@ const imagenes = [imgParrilla, imgMilanesa, imgPasta];
   <section class="menu">
     <h2 class="menu__titulo">Nuestro Menú</h2>
     <div class="menu__grid">
-      {MENU.restaurante.map((item, i) => (
+      {MENU.restaurante.map((item) => (
         <MenuCard
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}
-          imagen={imagenes[i]}
+          imagen={item.imagen}
         />
       ))}
     </div>
