@@ -6,6 +6,7 @@ Contexto para trabajar en este proyecto. Ver [ROADMAP.md](./ROADMAP.md) para est
 
 - **Astro 6** + TypeScript
 - **Adapter Netlify** (`@astrojs/netlify`) — el sitio se despliega como funciones serverless de Netlify
+- **React** (`@astrojs/react@5.x`) para islas interactivas. No subir a la v6/v7 mientras Astro use Vite 7: traen Vite 8 y rompen el dev server
 - **Chatbot con IA**: `@anthropic-ai/sdk`, modelo `claude-haiku-4-5-20251001`
 - Node >= 22.12.0
 

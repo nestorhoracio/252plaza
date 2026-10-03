@@ -28,7 +28,11 @@ Mantener actualizado al final de cada sesión de trabajo. No hace falta ser exha
 
 ## En curso
 
-- Plan de mejoras, **Fase 3 — Carrito multi-marca en React** (aprendizaje). Todavía no empezó.
+- Plan de mejoras, **Fase 3 — Carrito multi-marca en React** (aprendizaje). Avance:
+  - ✅ Paso 1: integración de React instalada (`@astrojs/react@5.0.7`, **fijada a la v5** porque la v6/v7 piden Vite 8 y Astro 6.1 usa Vite 7; con la v7 el dev server falla con `Missing field moduleType`)
+  - ✅ Paso 2: primera isla de prueba (`src/components/Contador.tsx`, `useState`). Quedó sin montar en ninguna página; es solo material de aprendizaje
+  - ⏭️ Siguiente: **3.3 cambios de datos** (`precio` a número, `id` y marca por plato, `formatearPrecio` con `Intl.NumberFormat`). Implica tocar 4 líneas de `chat.ts` solo para formato; falta confirmar cómo hacerlo antes de empezar
+  - Después: paso 3 (props en el botón "Agregar") y siguientes del plan
 
 ## Próximo / Pendiente
 
