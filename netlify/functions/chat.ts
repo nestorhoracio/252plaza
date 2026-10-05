@@ -1,6 +1,7 @@
 import type { Config, Context } from "@netlify/functions";
 import Anthropic from "@anthropic-ai/sdk";
 import { MENU } from "../../src/config/menu";
+import { formatearPrecio } from "../../src/config/formato";
 
 const MAX_BODY_BYTES = 20 * 1024;
 const MAX_MENSAJES = 10;
@@ -19,16 +20,16 @@ Tu rol es ayudar a los visitantes a elegir qué comer o tomar según sus prefere
 El menú completo disponible es:
 
 🍕 PIZZERÍA - Del Tomate:
-${MENU.pizzeria.map(p => `- ${p.nombre}: ${p.descripcion} | ${p.precio}`).join('\n')}
+${MENU.pizzeria.map(p => `- ${p.nombre}: ${p.descripcion} | ${formatearPrecio(p.precio)}`).join('\n')}
 
 ☕ CAFETERÍA - Modo Café:
-${MENU.cafeteria.map(p => `- ${p.nombre}: ${p.descripcion} | ${p.precio}`).join('\n')}
+${MENU.cafeteria.map(p => `- ${p.nombre}: ${p.descripcion} | ${formatearPrecio(p.precio)}`).join('\n')}
 
 🍦 HELADERÍA - Chelato:
-${MENU.heladeria.map(p => `- ${p.nombre}: ${p.descripcion} | ${p.precio}`).join('\n')}
+${MENU.heladeria.map(p => `- ${p.nombre}: ${p.descripcion} | ${formatearPrecio(p.precio)}`).join('\n')}
 
 🥩 RESTAURANTE - El Paso:
-${MENU.restaurante.map(p => `- ${p.nombre}: ${p.descripcion} | ${p.precio}`).join('\n')}
+${MENU.restaurante.map(p => `- ${p.nombre}: ${p.descripcion} | ${formatearPrecio(p.precio)}`).join('\n')}
 
 FLUJO DE PEDIDO:
 1. Recomendás platos según las preferencias del visitante

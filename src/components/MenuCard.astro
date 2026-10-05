@@ -1,10 +1,11 @@
 ---
 import { Image } from 'astro:assets';
+import { formatearPrecio } from '../config/formato';
 
 interface Props {
   nombre: string;
   descripcion: string;
-  precio: string;
+  precio: number;
   imagen: string;
 }
 
@@ -22,7 +23,7 @@ if (!src) {
   <div class="menu-card__body">
     <h3 class="menu-card__nombre">{nombre}</h3>
     <p class="menu-card__descripcion">{descripcion}</p>
-    <span class="menu-card__precio">{precio}</span>
+    <span class="menu-card__precio">{formatearPrecio(precio)}</span>
   </div>
 </div>
 
