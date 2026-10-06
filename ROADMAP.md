@@ -33,7 +33,8 @@ Mantener actualizado al final de cada sesión de trabajo. No hace falta ser exha
   - ✅ Paso 2: primera isla de prueba (`src/components/Contador.tsx`, `useState`). Quedó sin montar en ninguna página; es solo material de aprendizaje
   - ✅ 3.3 cambios de datos: `precio` ahora es número y cada plato tiene `id` escrito a mano (`"pizzeria-napolitana"`; no derivado del nombre, para que el carrito guardado no se rompa si se corrige un nombre). `formatearPrecio` en `src/config/formato.ts` (`$390`, miles con punto). `chat.ts` usa `formatearPrecio` en las 4 líneas del menú; se verificó que el texto del prompt es idéntico al anterior. El `PEDIDO_LISTO` sigue con precio como texto
   - ✅ Paso 3: props. `BotonAgregar.tsx` recibe solo el `id` del plato (`client:visible`, dentro de `MenuCard`); la cantidad es estado del carrito, no prop. Por ahora solo hace `console.log`
-  - ⏭️ Siguiente: paso 4 (el carrito renderiza una lista con `.map()` y `key`) y siguientes del plan
+  - ✅ Paso 4: listas con `.map()` y `key` (practicado con un componente de prueba que ya se borró; se provocó el aviso de React por `key` faltante). Se usa el `id` fijo del plato como `key`, no el índice
+  - ⏭️ Siguiente: paso 5 (estado derivado: el total se calcula, no se guarda) y después el paso 6 (el problema de las islas, antes de arreglarlo con nanostores)
   - Pendiente menor: `astro check` no está disponible (falta `@astrojs/check`); decidir si se instala para el criterio de aceptación del plan
 
 ## Próximo / Pendiente
