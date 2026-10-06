@@ -23,6 +23,7 @@ import heroPizzeria from '../assets/images/hero-pizzeria.webp';
     <div class="menu__grid">
       {MENU.pizzeria.map((item) => (
         <MenuCard
+          id={item.id}
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}

@@ -32,7 +32,8 @@ Mantener actualizado al final de cada sesión de trabajo. No hace falta ser exha
   - ✅ Paso 1: integración de React instalada (`@astrojs/react@5.0.7`, **fijada a la v5** porque la v6/v7 piden Vite 8 y Astro 6.1 usa Vite 7; con la v7 el dev server falla con `Missing field moduleType`)
   - ✅ Paso 2: primera isla de prueba (`src/components/Contador.tsx`, `useState`). Quedó sin montar en ninguna página; es solo material de aprendizaje
   - ✅ 3.3 cambios de datos: `precio` ahora es número y cada plato tiene `id` escrito a mano (`"pizzeria-napolitana"`; no derivado del nombre, para que el carrito guardado no se rompa si se corrige un nombre). `formatearPrecio` en `src/config/formato.ts` (`$390`, miles con punto). `chat.ts` usa `formatearPrecio` en las 4 líneas del menú; se verificó que el texto del prompt es idéntico al anterior. El `PEDIDO_LISTO` sigue con precio como texto
-  - ⏭️ Siguiente: paso 3 (props en el botón "Agregar" dentro de `MenuCard`) y siguientes del plan
+  - ✅ Paso 3: props. `BotonAgregar.tsx` recibe solo el `id` del plato (`client:visible`, dentro de `MenuCard`); la cantidad es estado del carrito, no prop. Por ahora solo hace `console.log`
+  - ⏭️ Siguiente: paso 4 (el carrito renderiza una lista con `.map()` y `key`) y siguientes del plan
   - Pendiente menor: `astro check` no está disponible (falta `@astrojs/check`); decidir si se instala para el criterio de aceptación del plan
 
 ## Próximo / Pendiente

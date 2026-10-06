@@ -23,6 +23,7 @@ import heroRestaurante from '../assets/images/hero-restaurante.webp';
     <div class="menu__grid">
       {MENU.restaurante.map((item) => (
         <MenuCard
+          id={item.id}
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}

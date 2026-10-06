@@ -1,15 +1,17 @@
 ---
 import { Image } from 'astro:assets';
 import { formatearPrecio } from '../config/formato';
+import BotonAgregar from './BotonAgregar';
 
 interface Props {
+  id: string;
   nombre: string;
   descripcion: string;
   precio: number;
   imagen: string;
 }
 
-const { nombre, descripcion, precio, imagen } = Astro.props;
+const { id, nombre, descripcion, precio, imagen } = Astro.props;
 
 const imagenes = import.meta.glob<{ default: ImageMetadata }>('../assets/images/*.webp', { eager: true });
 const src = imagenes[`../assets/images/${imagen}`]?.default;
@@ -24,6 +26,7 @@ if (!src) {
     <h3 class="menu-card__nombre">{nombre}</h3>
     <p class="menu-card__descripcion">{descripcion}</p>
     <span class="menu-card__precio">{formatearPrecio(precio)}</span>
+    <BotonAgregar id={id} client:visible />
   </div>
 </div>
 

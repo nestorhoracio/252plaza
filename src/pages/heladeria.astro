@@ -23,6 +23,7 @@ import heroHeladeria from '../assets/images/hero-heladeria.webp';
     <div class="menu__grid">
       {MENU.heladeria.map((item) => (
         <MenuCard
+          id={item.id}
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}

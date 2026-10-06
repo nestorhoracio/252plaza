@@ -23,6 +23,7 @@ import heroCafeteria from '../assets/images/hero-cafeteria.webp';
     <div class="menu__grid">
       {MENU.cafeteria.map((item) => (
         <MenuCard
+          id={item.id}
           nombre={item.nombre}
           descripcion={item.descripcion}
           precio={item.precio}
